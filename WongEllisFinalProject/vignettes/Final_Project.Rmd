@@ -1,0 +1,67 @@
+---
+title: "Image Classification Using Kmeans"
+author: "Dorothy Ellis & Kenny Wong"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+
+## Introduction
+
+K-Means Clustering is an unsupervised learning algorithm which partions a collection of objects into K clusters. Clustering analysis plays a crucial role in many applications in data mining. In this package we will classify images using the K-Means algorithm.
+
+## Methods
+
+1. Define number of clusters (K)
+2. Initialization of k centroids randomly
+3. Assign each observation to closest centroid through least squares distance.
+4. calculate new means as centroids for new clusters
+5. Repeat until convergence or a maximum iteration is reached.
+
+In clustering the image, we convert it into an array with RGB values. Once the clusters are formed, the image is recreated with the center of the clusters specified. 
+
+To determine an optimal number of K clusters for the algorithm, one can use direct methods or statistical methods. 
+
+
+The default uses the Silhouette method to determine the number of   clusters. This approach determines how well each object lies with its cluster. We vary the amount of clusters from 2 to 15. Average silhouette of the observations are calculated for each k.
+
+The gap statistics is a statistical method, which incorporates the  comparison of intra-cluster variation for different K cluster values, using the expected values as the null distribution reference. The optimal number of clusters is determined by the value that maximizes the gap statistic. We compute the estimated gap statistic by its deviation of the observed \(W_k\) value from its expected \(W_{kb}\) value under the null hypothesis.
+
+   \(Gap(k) = \frac{1}{B}\sum_{b=1}^{B} log(W_{kb})-log(W_k))\)
+
+
+## Default Example
+
+By default, the image is a picture of a dog in a donut floatie. The default uses the silhouette method to automatically select the number of clusters (see above for further explanation of methodology behind Silhouette)
+
+```{r, cache=T}
+# Default image is a pug in a floatie using Silhouette method to find number of clusters
+## imageClassifier()
+```
+
+```{r echo=FALSE, out.width='100%'}
+knitr::include_graphics('C:/BiostatsR/WongEllisFinalProject/ImagetoClust.jpg')
+knitr::include_graphics('C:/BiostatsR/WongEllisFinalProject/kmeanscomparison.jpg')
+```
+
+## More Examples
+
+```{r, cache=T}
+## imageClassifier("https://images.csmonitor.com/csm/2016/04/977963_2_0427-peacock-mating-display_standard.jpg?alias=standard_900x600nc",4)
+```
+
+```{r echo=FALSE, out.width='100%'}
+knitr::include_graphics('C:/BiostatsR/WongEllisFinalProject/vignettes/ImagetoClust.jpg')
+knitr::include_graphics('C:/BiostatsR/WongEllisFinalProject/vignettes/kmeanscomparison.jpg')
+```
