@@ -1,4 +1,4 @@
-##' This function classifies the image using either a user-specified number of clusters or the silhouette method through the avg_sil function and ggplotshort function in this package in order to plot the original image and the k clustered image (Description)
+##' This function classifies the image using either a user-specified number of clusters or the silhouette method through the avg_sil function and ggplotshort function in this package in order to plot the original image and the k clustered image. It saves this image as a .jpg in the working directory (Description)
 ##'
 ##' The default is a Pug in a floatie using the Silhouette method. This will return the original image in addition to the k-means clustered image(Details)
 ##' ##' @title Image Classifier
@@ -25,7 +25,7 @@ imageClassifier <- function(url = "https://res.cloudinary.com/twenty20/private_i
         axis.ticks = ggplot2::element_blank(), axis.title.x = ggplot2::element_blank(), 
         axis.title.y = ggplot2::element_blank())
     plot1 <- ggplotshort(rgb(imgRGB[c("R", "G", "B")]), imgRGB, "Original", themevals)
-    if (numclust%%1 != 0 || numclust < 2) {
+    if (!is.numeric(numclust)||numclust%%1 != 0 || numclust < 2) {
         s <- sample(nrow(imgRGB), size = 5000, replace = FALSE)
         optimMat <- imgRGB[s, ]
         # Compute and plot wss for k = 2 to k = 15
